@@ -1,0 +1,127 @@
+﻿.jcl p {
+  float: left;
+  width: 100%;
+}
+
+.Css_sac {
+  /*float:left;width:100%;padding:10px; background:#fffee4; border:1px solid #d5d5d5;margin:10px 0;*/
+}
+.Css_sac .imgMarkCss {
+  /*width:105px;height:85px;*/
+  border: 0; /*cursor:pointer;*/
+  padding: 1px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+/*.Css_sac .imgMarkCss:hover{ border:1px solid #ff3300;}*/
+.Css_sac p.sacImgMarkCss {
+  line-height: 1.7em;
+}
+.Css_sac .cs_fig_con {
+  font-weight: bold;
+}
+.Css_sac .imgGroupCss {
+  /*width:110px;margin-right:10px;*/
+  text-align: center;
+}
+.Css_sac .imgGroupCss_v {
+  /*float:left;width:110px;*/
+  text-align: center; /*margin-right: 10px;*/
+}
+.Css_sac .imgGroupCss_a {
+}
+.Css_sac .imgGroupCss_h {
+  text-align: center;
+}
+.Css_sac .imgGroupCss_h img {
+  /*width:105px;height:85px;*/
+  border: 0; /*cursor:pointer;*/
+  padding: 1px;
+  border: 1px solid #ccc;
+  margin: 0 0 10px 0;
+}
+.Css_sac .imgGroupCss_v img {
+  /*width: 105px;height: 80px;*/
+  border: 0; /*cursor: pointer;*/
+  padding: 1px;
+  border: 1px solid #ccc;
+  margin: 0 10px 5px 0;
+}
+
+#htmlContent p {
+  padding: 10px 0;
+} /*20200513 添加正文段落间距*/
+#htmlContent p {
+  overflow-x: auto;
+} /*20210430 公式太长超出范围后 左右滚动*/
+#htmlContent .Css_sac p {
+  overflow: initial;
+}
+
+/*.Css_sac{float:left;width:658px;padding:10px; background:#fffee4; border:1px solid #d5d5d5;margin:10px 0;}
+.Css_sac p.sacImgMarkCss {float:left;width:530px}
+.Css_sac .imgGroupCss_v{width:110px;text-align:center;margin-right:10px;}
+.Css_sac .imgGroupCss_v img{width:105px;height:85px;border:0; cursor:pointer; padding:1px; border:1px solid #ccc;margin:0 10px 10px 0;}*/
+
+/*margin:15px 0 12px 0;*/
+.E-Title1 {
+  font-size: 19px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  line-height: 30px;
+  padding: 0;
+  text-align: left;
+  color: #31849b;
+}
+.E-Title1 a {
+  color: #31849b;
+}
+
+.E-Title2 {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+  text-align: left;
+  color: #31849b;
+}
+.E-Title3 {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+  text-align: left;
+  color: #31849b;
+}
+/*img {height:auto;vertical-align:middle;line-height:1.7}*/
+img {
+  vertical-align: middle;
+  line-height: 1.7;
+}
+
+#imgdiv {
+  margin: 0 auto;
+  border: 1px solid #0f0f0f;
+  padding: 15px;
+  width: 410px;
+  background: #ffffff;
+  display: none;
+  position: absolute;
+  vertical-align: middle;
+  text-align: left;
+  font-family: Arial;
+  z-index: 99999999;
+  font-size: 12px;
+  line-height: 20px;
+  border: 2px solid #006699;
+  overflow: auto;
+}
+
+.bracketMark {
+  float: right;
+  width: 60px;
+  text-align: right;
+}
+
+.Css_sac > .imgGroupCss_v > table {
+  margin-left: 0 !important;
+  margin: 0 auto !important;
+}
