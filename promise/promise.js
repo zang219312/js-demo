@@ -16,12 +16,17 @@ function MyPromise(executor) {
     this.PromiseResult = data
   }
 
-  // 同步调用 执行器函数
-  executor(resolve.bind(this), reject.bind(this))
+  try {
+    // 同步调用 【执行器函数】
+    executor(resolve.bind(this), reject.bind(this))
+  } catch (error) {
+    // 修改 promise的状态为 【失败】
+    reject.call(this, error)
+  }
 }
 
 // add function ·then·
 MyPromise.prototype.then = function (onResolved, onRejected) {
-  console.log(onResolved)
-  console.log(onResolved)
+  /* console.log(onResolved)
+  console.log(onResolved) */
 }
