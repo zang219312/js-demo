@@ -4,6 +4,7 @@ function MyPromise(executor) {
 
   // resolve 函数
   function resolve(data) {
+    if (this.PromiseState !== 'pending') return
     // ? 1.修改对象的状态 （promiseState）
     this.PromiseState = 'fulfilled' // resolved
     // ? 2.设置对象结果值 （promiseResult）
@@ -12,6 +13,8 @@ function MyPromise(executor) {
 
   // reject
   function reject(data) {
+    if (this.PromiseState !== 'pending') return
+
     this.PromiseState = 'rejected'
     this.PromiseResult = data
   }
