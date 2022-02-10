@@ -28,8 +28,13 @@ function MyPromise(executor) {
   }
 }
 
-// add function ·then·
-MyPromise.prototype.then = function (onResolved, onRejected) {
-  /* console.log(onResolved)
-  console.log(onResolved) */
+// add function myThen
+MyPromise.prototype.myThen = function (onResolved, onRejected) {
+  if (this.PromiseState === 'fulfilled') {
+    onResolved(this.PromiseResult)
+  }
+
+  if (this.PromiseState === 'rejected') {
+    onRejected(this.PromiseResult)
+  }
 }
