@@ -12,7 +12,6 @@ function MyPromise(executor) {
     // ? 2.设置对象结果值 （promiseResult）
     this.PromiseResult = data
     // 调用成功的回调函数
-
     this.callbacks.forEach(item => {
       item.onResolved(data)
     })
@@ -42,21 +41,43 @@ function MyPromise(executor) {
 
 // add function myThen
 MyPromise.prototype.myThen = function (onResolved, onRejected) {
-  console.log(this.PromiseState)
-  if (this.PromiseState === 'fulfilled') {
-    onResolved(this.PromiseResult)
-  }
+  return new MyPromise((resolve, reject) => {
+    if (this.PromiseState === 'fulfilled') {
+      // 回调的执行结果
+      try {
+        console.log(onResolved(this.PromiseResult))
 
-  if (this.PromiseState === 'rejected') {
-    onRejected(this.PromiseResult)
-  }
+        const result = onResolved(this.PromiseResult)
 
-  // 判断pending 状态
-  if (this.PromiseState === 'pending') {
-    // 保存回调函数
-    this.callbacks.push({
-      onResolved,
-      onRejected
-    })
-  }
+        // 如果是 MyPromise 实例
+        if (result instanceof MyPromise) {
+          result.myThen(
+            rsl => {
+              resolve(rsl)
+            },
+            rej => {
+              reject(rej)
+            }
+          )
+        } else {
+          resolve(result)
+        }
+      } catch (e) {
+        reject(e + 'e')
+      }
+    }
+
+    if (this.PromiseState === 'rejected') {
+      onRejected(this.PromiseResult)
+    }
+
+    // 判断pending 状态
+    if (this.PromiseState === 'pending') {
+      // 保存回调函数
+      this.callbacks.push({
+        onResolved,
+        onRejected
+      })
+    }
+  })
 }

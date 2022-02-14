@@ -14,28 +14,26 @@
 </body>
 <script>
   const P = new MyPromise((resolve, reject) => {
-    setTimeout(() => {
-      resolve('OKK')
-    }, 1000);
-
+    resolve('OKK')
   })
 
   // Object.prototype.sum = (a, b) => a + b
   //  console.log(P.__proto__ === MyPromise.prototype); // true
   // console.log(P.__proto__.__proto__ === Object.prototype); // true
   // console.log(P.__proto__.__proto__);
-  P.myThen(value => {
-    console.log('aa', value);
+  const res = P.myThen(value => {
+    // return 'hello'
+    /*  return new MyPromise((resolve, reject) => {
+       // resolve('successfully')
+        reject('no no no')
+     }) */
+
+    throw 'FAIL'
   }, reason => {
-    console.log('aa', reason);
+    console.log(reason);
   })
 
-  P.myThen(value => {
-    console.log('bb', value);
-  }, reason => {
-    console.log('bb', reason);
-  })
-
+  console.log('res ', res);
 
 
 </script>
