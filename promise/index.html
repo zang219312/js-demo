@@ -25,9 +25,15 @@
   // console.log(P.__proto__.__proto__ === Object.prototype); // true
   // console.log(P.__proto__.__proto__);
   P.myThen(value => {
-    console.log(value);
+    console.log('aa', value);
   }, reason => {
-    console.log(reason);
+    console.log('aa', reason);
+  })
+
+  P.myThen(value => {
+    console.log('bb', value);
+  }, reason => {
+    console.log('bb', reason);
   })
 
 
