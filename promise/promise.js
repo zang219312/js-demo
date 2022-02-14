@@ -1,6 +1,8 @@
 function MyPromise(executor) {
   this.PromiseState = 'pending'
   this.PromiseResult = null
+  // 声明一个属性
+  this.callback = null
 
   // resolve 函数
   function resolve(data) {
@@ -9,6 +11,10 @@ function MyPromise(executor) {
     this.PromiseState = 'fulfilled' // resolved
     // ? 2.设置对象结果值 （promiseResult）
     this.PromiseResult = data
+    // 调用成功的回调函数
+    if (this.callback.onResolved) {
+      this.callback.onResolved(data)
+    }
   }
 
   // reject
@@ -17,6 +23,10 @@ function MyPromise(executor) {
 
     this.PromiseState = 'rejected'
     this.PromiseResult = data
+    // 调用失败的回调函数
+    if (this.callback.onRejected) {
+      this.callback.onRejected(data)
+    }
   }
 
   try {
@@ -30,11 +40,21 @@ function MyPromise(executor) {
 
 // add function myThen
 MyPromise.prototype.myThen = function (onResolved, onRejected) {
+  console.log(this.PromiseState)
   if (this.PromiseState === 'fulfilled') {
     onResolved(this.PromiseResult)
   }
 
   if (this.PromiseState === 'rejected') {
     onRejected(this.PromiseResult)
+  }
+
+  // 判断pending 状态
+  if (this.PromiseState === 'pending') {
+    // 保存回调函数
+    this.callback = {
+      onResolved,
+      onRejected
+    }
   }
 }

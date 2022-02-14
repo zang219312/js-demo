@@ -14,17 +14,16 @@
 </body>
 <script>
   const P = new MyPromise((resolve, reject) => {
-    resolve('okk')
-    reject('errs')
-    // throw 抛出异常
-    throw 'Error'
+    setTimeout(() => {
+      resolve('OKK')
+    }, 1000);
 
   })
 
-  Object.prototype.sum = (a, b) => a + b
+  // Object.prototype.sum = (a, b) => a + b
   //  console.log(P.__proto__ === MyPromise.prototype); // true
   // console.log(P.__proto__.__proto__ === Object.prototype); // true
-  console.log(P.__proto__.__proto__);
+  // console.log(P.__proto__.__proto__);
   P.myThen(value => {
     console.log(value);
   }, reason => {
