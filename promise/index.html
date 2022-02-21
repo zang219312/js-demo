@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>异步任务 then 返回结果</title>
   <script src="./promise.js"></script>
 </head>
 
@@ -14,23 +14,22 @@
 </body>
 <script>
   const P = new MyPromise((resolve, reject) => {
-    resolve('OKK')
+    setTimeout(() => {
+      resolve('OKK')
+      // reject('error')
+    }, 1000);
   })
 
-  // Object.prototype.sum = (a, b) => a + b
-  //  console.log(P.__proto__ === MyPromise.prototype); // true
-  // console.log(P.__proto__.__proto__ === Object.prototype); // true
-  // console.log(P.__proto__.__proto__);
-  const res = P.myThen(value => {
-    // return 'hello'
-    /*  return new MyPromise((resolve, reject) => {
-       // resolve('successfully')
-        reject('no no no')
-     }) */
 
-    throw 'FAIL'
+  const res = P.myThen(value => {
+    console.log(24, value);
+    throw 'Error1'
+    return new MyPromise((resolve, reject) => {
+      resolve()
+    })
   }, reason => {
-    console.log(reason);
+    console.warn(reason);
+    throw 'Error2'
   })
 
   console.log('res ', res);

@@ -45,19 +45,13 @@ MyPromise.prototype.myThen = function (onResolved, onRejected) {
     if (this.PromiseState === 'fulfilled') {
       // 回调的执行结果
       try {
-        console.log(onResolved(this.PromiseResult))
-
         const result = onResolved(this.PromiseResult)
 
         // 如果是 MyPromise 实例
         if (result instanceof MyPromise) {
           result.myThen(
-            rsl => {
-              resolve(rsl)
-            },
-            rej => {
-              reject(rej)
-            }
+            v => resolve(v),
+            r => reject(r)
           )
         } else {
           resolve(result)
@@ -75,8 +69,36 @@ MyPromise.prototype.myThen = function (onResolved, onRejected) {
     if (this.PromiseState === 'pending') {
       // 保存回调函数
       this.callbacks.push({
-        onResolved,
-        onRejected
+        onResolved(e) {
+          try {
+            const result = onResolved(e)
+            if (result instanceof MyPromise) {
+              result.myThen(
+                v => resolve(v),
+                r => reject(r)
+              )
+            } else {
+              resolve(result)
+            }
+          } catch (error) {
+            reject(error)
+          }
+        },
+        onRejected(e) {
+          try {
+            const result = onRejected(e)
+            if (result instanceof MyPromise) {
+              result.myThen(
+                v => resolve(v),
+                r => reject(r)
+              )
+            } else {
+              resolve(result)
+            }
+          } catch (error) {
+            reject(error)
+          }
+        }
       })
     }
   })
