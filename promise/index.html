@@ -15,8 +15,8 @@
 <script>
   const P = new MyPromise((resolve, reject) => {
     setTimeout(() => {
-      resolve('OKK')
-      // reject('error')
+      // resolve('OKK')
+      reject('error')
     }, 1000);
   })
 

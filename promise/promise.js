@@ -7,6 +7,7 @@ function MyPromise(executor) {
   // resolve 函数
   function resolve(data) {
     if (this.PromiseState !== 'pending') return
+    console.log('res', data)
     // ? 1.修改对象的状态 （promiseState）
     this.PromiseState = 'fulfilled' // resolved
     // ? 2.设置对象结果值 （promiseResult）
@@ -20,13 +21,13 @@ function MyPromise(executor) {
   // reject
   function reject(data) {
     if (this.PromiseState !== 'pending') return
-
+    console.log('rej', data, this.callbacks)
     this.PromiseState = 'rejected'
     this.PromiseResult = data
     // 调用失败的回调函数
 
     this.callbacks.forEach(item => {
-      item.onRejected(data)
+      item.onRejected()
     })
   }
 
@@ -41,12 +42,12 @@ function MyPromise(executor) {
 
 // add function myThen
 MyPromise.prototype.myThen = function (onResolved, onRejected) {
+  const self = this
   return new MyPromise((resolve, reject) => {
-    if (this.PromiseState === 'fulfilled') {
-      // 回调的执行结果
+    function callback(type) {
       try {
-        const result = onResolved(this.PromiseResult)
-
+        const result = type(self.PromiseResult)
+        console.log('result')
         // 如果是 MyPromise 实例
         if (result instanceof MyPromise) {
           result.myThen(
@@ -57,47 +58,28 @@ MyPromise.prototype.myThen = function (onResolved, onRejected) {
           resolve(result)
         }
       } catch (e) {
-        reject(e + 'e')
+        reject(e)
       }
     }
 
+    if (this.PromiseState === 'fulfilled') {
+      // 回调的执行结果
+      callback(onResolved)
+    }
+
     if (this.PromiseState === 'rejected') {
-      onRejected(this.PromiseResult)
+      callback(onRejected)
     }
 
     // 判断pending 状态
     if (this.PromiseState === 'pending') {
       // 保存回调函数
       this.callbacks.push({
-        onResolved(e) {
-          try {
-            const result = onResolved(e)
-            if (result instanceof MyPromise) {
-              result.myThen(
-                v => resolve(v),
-                r => reject(r)
-              )
-            } else {
-              resolve(result)
-            }
-          } catch (error) {
-            reject(error)
-          }
+        onResolved() {
+          callback(onResolved)
         },
-        onRejected(e) {
-          try {
-            const result = onRejected(e)
-            if (result instanceof MyPromise) {
-              result.myThen(
-                v => resolve(v),
-                r => reject(r)
-              )
-            } else {
-              resolve(result)
-            }
-          } catch (error) {
-            reject(error)
-          }
+        onRejected() {
+          callback(onRejected)
         }
       })
     }
