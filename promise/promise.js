@@ -115,3 +115,25 @@ MyPromise.reject = function (reason) {
     reject(reason)
   })
 }
+
+MyPromise.all = function (promises) {
+  return new MyPromise((resolve, reject) => {
+    let count = 0
+    let arr = []
+    for (let i = 0; i < promises.length; i++) {
+      promises[i].myThen(
+        v => {
+          // 对象的状态是成功
+          // 每个promise对象的状态 都成功
+          count += 1
+          arr[i] = v
+
+          if (count === promises.length) {
+            resolve(arr)
+          }
+        },
+        r => reject(r)
+      )
+    }
+  })
+}
