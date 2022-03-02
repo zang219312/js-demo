@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>then 方法回调异步执行</title>
+  <title>Class 版本封装</title>
   <script src="./promise.js"></script>
 </head>
 
@@ -14,16 +14,15 @@
 </body>
 <script>
   const P1 = new MyPromise((resolve, reject) => {
-    // resolve('ok a')
-    reject('error')
-    console.log(111);
+    setTimeout(() => {
+      resolve('ok a')
+    })
   })
   P1.myThen(value => {
-    console.log(222);
+    console.log(value);
   }, reason => {
-    console.log(444);
+    console.log(reason);
   })
-  console.log(333);
 
 </script>
 
