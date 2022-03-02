@@ -137,3 +137,17 @@ MyPromise.all = function (promises) {
     }
   })
 }
+
+MyPromise.race = function (promises) {
+  return new MyPromise((resolve, reject) => {
+    for (const item of promises) {
+      item.myThen(
+        v => {
+          // 修改返回promise对象的状态时成功
+          resolve(v)
+        },
+        r => reject(r)
+      )
+    }
+  })
+}
