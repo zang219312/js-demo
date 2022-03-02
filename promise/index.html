@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Promise.resolve 封装</title>
+  <title>Promise.reject 封装</title>
   <script src="./promise.js"></script>
 </head>
 
@@ -13,16 +13,14 @@
 
 </body>
 <script>
-  const P1 = MyPromise.resolve('ok s')
-  const P2 = MyPromise.resolve(new MyPromise((resolve, reject) => {
-    resolve('succ')
+  const P1 = MyPromise.reject('error')
+  const P2 = MyPromise.reject(new MyPromise((resolve, reject) => {
+    resolve('ok ')
   }))
 
-  const P3 = MyPromise.resolve(P1)
 
   console.log(P1);
   console.log(P2);
-  console.log(P3);
 
 
 
