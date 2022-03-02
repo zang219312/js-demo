@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>异步任务 then 返回结果</title>
+  <title>catch 方法与异常穿透</title>
   <script src="./promise.js"></script>
 </head>
 
@@ -15,24 +15,21 @@
 <script>
   const P = new MyPromise((resolve, reject) => {
     setTimeout(() => {
-      // resolve('OKK')
-      reject('error')
+      // reject('error s')
+      resolve('ok s')
     }, 1000);
   })
 
 
-  const res = P.myThen(value => {
-    console.log(24, value);
-    throw 'Error1'
-    return new MyPromise((resolve, reject) => {
-      resolve()
+  //值传递
+  P.myThen()
+    .myThen(res => {
+      console.log(222, res);
+    }).myThen(res => {
+      console.log(333, res);
+    }).myCatch(reason => {
+      console.warn(reason)
     })
-  }, reason => {
-    console.warn(reason);
-    throw 'Error2'
-  })
-
-  console.log('res ', res);
 
 
 </script>

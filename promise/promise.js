@@ -7,7 +7,6 @@ function MyPromise(executor) {
   // resolve 函数
   function resolve(data) {
     if (this.PromiseState !== 'pending') return
-    console.log('res', data)
     // ? 1.修改对象的状态 （promiseState）
     this.PromiseState = 'fulfilled' // resolved
     // ? 2.设置对象结果值 （promiseResult）
@@ -21,7 +20,6 @@ function MyPromise(executor) {
   // reject
   function reject(data) {
     if (this.PromiseState !== 'pending') return
-    console.log('rej', data, this.callbacks)
     this.PromiseState = 'rejected'
     this.PromiseResult = data
     // 调用失败的回调函数
@@ -43,11 +41,20 @@ function MyPromise(executor) {
 // add function myThen
 MyPromise.prototype.myThen = function (onResolved, onRejected) {
   const self = this
+  // 判断回调函数参数
+  if (typeof onRejected !== 'function') {
+    onRejected = reason => {
+      throw reason
+    }
+  }
+
+  if (typeof onResolved !== 'function') {
+    onResolved = res => res
+  }
   return new MyPromise((resolve, reject) => {
     function callback(type) {
       try {
         const result = type(self.PromiseResult)
-        console.log('result')
         // 如果是 MyPromise 实例
         if (result instanceof MyPromise) {
           result.myThen(
@@ -84,4 +91,8 @@ MyPromise.prototype.myThen = function (onResolved, onRejected) {
       })
     }
   })
+}
+
+MyPromise.prototype.myCatch = function (onRejected) {
+  return this.myThen(undefined, onRejected)
 }
