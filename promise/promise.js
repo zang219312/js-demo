@@ -12,8 +12,10 @@ function MyPromise(executor) {
     // ? 2.设置对象结果值 （promiseResult）
     this.PromiseResult = data
     // 调用成功的回调函数
-    this.callbacks.forEach(item => {
-      item.onResolved(data)
+    setTimeout(() => {
+      this.callbacks.forEach(item => {
+        item.onResolved(data)
+      })
     })
   }
 
@@ -24,8 +26,10 @@ function MyPromise(executor) {
     this.PromiseResult = data
     // 调用失败的回调函数
 
-    this.callbacks.forEach(item => {
-      item.onRejected()
+    setTimeout(() => {
+      this.callbacks.forEach(item => {
+        item.onRejected()
+      })
     })
   }
 
@@ -71,11 +75,15 @@ MyPromise.prototype.myThen = function (onResolved, onRejected) {
 
     if (this.PromiseState === 'fulfilled') {
       // 回调的执行结果
-      callback(onResolved)
+      setTimeout(() => {
+        callback(onResolved)
+      })
     }
 
     if (this.PromiseState === 'rejected') {
-      callback(onRejected)
+      setTimeout(() => {
+        callback(onRejected)
+      })
     }
 
     // 判断pending 状态
