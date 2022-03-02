@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>catch 方法与异常穿透</title>
+  <title>Promise.resolve 封装</title>
   <script src="./promise.js"></script>
 </head>
 
@@ -13,23 +13,19 @@
 
 </body>
 <script>
-  const P = new MyPromise((resolve, reject) => {
-    setTimeout(() => {
-      // reject('error s')
-      resolve('ok s')
-    }, 1000);
-  })
+  const P1 = MyPromise.resolve('ok s')
+  const P2 = MyPromise.resolve(new MyPromise((resolve, reject) => {
+    resolve('succ')
+  }))
+
+  const P3 = MyPromise.resolve(P1)
+
+  console.log(P1);
+  console.log(P2);
+  console.log(P3);
 
 
-  //值传递
-  P.myThen()
-    .myThen(res => {
-      console.log(222, res);
-    }).myThen(res => {
-      console.log(333, res);
-    }).myCatch(reason => {
-      console.warn(reason)
-    })
+
 
 
 </script>

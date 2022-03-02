@@ -96,3 +96,16 @@ MyPromise.prototype.myThen = function (onResolved, onRejected) {
 MyPromise.prototype.myCatch = function (onRejected) {
   return this.myThen(undefined, onRejected)
 }
+
+MyPromise.resolve = function (val) {
+  return new MyPromise((resolve, reject) => {
+    if (val instanceof MyPromise) {
+      val.myThen(
+        v => resolve(v),
+        r => reject(r)
+      )
+    } else {
+      resolve(val)
+    }
+  })
+}
