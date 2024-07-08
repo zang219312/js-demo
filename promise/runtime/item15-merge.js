@@ -24,16 +24,19 @@ function mergePromise(ajaxArr) {
   // code here
   const data = []
   let pro = Promise.resolve(33)
-  ajaxArr.forEach((ajax,k) => {
+  ajaxArr.forEach((ajax, k) => {
     /**
      * 开始循环时执行同步代码，循环 3 次
-     * pro 的状态已经改变，[ajax 回调]添加到微队列中等待执行，[res 回调]加入微队列
+     * 第一次循环时，pro 0 promise<fulfilled>,[ajax 回调]添加到微队列中等待执行，[res 回调]理解为先不执行,
+     * 第二次循环,pro 1 promise<pending>,
+     * 第三次循环,pro 2 promise<pending>,后跳出函数【mergePromise】，打印 start，
+     *
      * todo processOn
      */
 
     // 循环里第一个 then 是调用ajax的
     // 第二个 then 是为了获取ajax的结果
-    console.log(`pro ${k}`,pro)
+    console.log(`pro ${k}`, pro)
     pro = pro.then(ajax).then(res => {
       data.push(res)
       return data
@@ -46,3 +49,5 @@ mergePromise([ajax1, ajax2, ajax3]).then(data => {
   console.log('data', data) // [1,2,3]
   return 'result'
 })
+
+console.log('start')
